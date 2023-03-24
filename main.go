@@ -12,6 +12,8 @@ import (
 	"github.com/joho/godotenv"
 	cosmosmath "cosmossdk.io/math"
 	openai "github.com/sashabaranov/go-openai"
+	"encoding/base64"
+	"encoding/hex"
 )
 
 // gpt3 processes a given message using GPT-3 and prints the response.
@@ -50,13 +52,36 @@ func getData(client *client.Client, height uint64, namespaceID namespace.ID) {
 	fmt.Printf("Got header: %v", responseRange)
 }
 
+func getDataAsPrompt(client *client.Client, height uint64, namespaceID namespace.ID) string {
+	headerParam := getHeader(client, height)
+	fmt.Println(headerParam.DAH)
+	response, err := client.Share.GetSharesByNamespace(context.Background(), headerParam.DAH, namespaceID)
+	if err != nil {
+		log.Fatalf("Error getting shares by namespace data for block height: %v. Error is %v", height, err)
+	}
+	fmt.Println(response)
+	fmt.Println(len(response))
+	var dataString string
+	for _, shares := range response {
+		fmt.Println(shares)
+		for _, share := range shares.Shares {
+			fmt.Println(string(share[8:]))
+			dataString = string(share[8:])
+		}
+	}
+	return dataString
+}
+
 // postData submits a new transaction with the provided data to the Celestia node.
-func postData(client *client.Client, namespaceID namespace.ID, payLoad []byte, fee cosmosmath.Int, gasLimit uint64) {
+func postDataAndGetHeight(client *client.Client, namespaceID namespace.ID, payLoad []byte, fee cosmosmath.Int, gasLimit uint64) uint64 {
 	response, err := client.State.SubmitPayForBlob(context.Background(), namespaceID, payLoad, fee, gasLimit)
 	if err != nil {
 		log.Fatalf("Error submitting pay for blob: %v", err)
 	}
 	fmt.Printf("Got output: %v", response)
+	height := uint64(response.Height)
+	fmt.Printf("Height that data was submitted at: %v", height)
+	return height
 }
 
 // getHeader fetches a header from the Celestia node based on the provided height.
@@ -89,21 +114,41 @@ func createClient(ctx context.Context) *client.Client {
 	return rpc
 }
 
+func createNamespaceID() []byte {
+	nIDString := os.Getenv("NAMESPACE_ID")
+	fmt.Println(nIDString)
+	data, err := hex.DecodeString(nIDString)
+	if err != nil {
+		log.Fatalf("Error decoding hex string:", err)
+	}
+	fmt.Println(data)
+	// Encode the byte array in Base64
+	base64Str := base64.StdEncoding.EncodeToString(data)
+	fmt.Println(base64Str)
+	namespaceID, err := base64.StdEncoding.DecodeString(base64Str)
+	if err != nil {
+		log.Fatalf("Error decoding Base64 string:", err)
+	}
+	fmt.Println(namespaceID)
+	return namespaceID
+}
+
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	loadEnv()
-	var namespaceID namespace.ID = []byte{5, 3, 0, 1, 4, 5, 9, 2}
+	var namespaceID namespace.ID = createNamespaceID() 
 	client := createClient(ctx)
-	var gasLimit uint64 = 60000
-	fee := cosmosmath.NewInt(20000)
+	var gasLimit uint64 = 6000000
+	fee := cosmosmath.NewInt(10000)
 	getData(client, 20, namespaceID)
 	var gptPrompt string = "Tell me about modular blockchains"
 	prompt := []byte{0x00, 0x01, 0x02}
 	prompt = append(prompt, []byte(gptPrompt)...)
 	fmt.Println(prompt)
-	postData(client, namespaceID, prompt, fee, gasLimit)
-	gpt3(gptPrompt)
+	height := postDataAndGetHeight(client, namespaceID, prompt, fee, gasLimit)
+	promptString := getDataAsPrompt(client, height, namespaceID)
+	gpt3(promptString)
 	// Close the client when you are finished
 	client.Close()
 }
