@@ -2,7 +2,13 @@ module darpcclient
 
 go 1.19
 
-require github.com/celestiaorg/celestia-node v0.7.0-rc10
+require (
+	cosmossdk.io/math v1.0.0-beta.6
+	github.com/celestiaorg/celestia-node v0.7.0-rc10
+	github.com/celestiaorg/nmt v0.14.0
+	github.com/joho/godotenv v1.5.1
+	github.com/sashabaranov/go-openai v1.5.7
+)
 
 require (
 	cloud.google.com/go v0.105.0 // indirect
@@ -11,7 +17,6 @@ require (
 	cloud.google.com/go/iam v0.7.0 // indirect
 	cloud.google.com/go/storage v1.27.0 // indirect
 	cosmossdk.io/errors v1.0.0-beta.7 // indirect
-	cosmossdk.io/math v1.0.0-beta.6 // indirect
 	filippo.io/edwards25519 v1.0.0-rc.1 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
@@ -19,7 +24,7 @@ require (
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/Workiva/go-datastructures v1.0.53 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
-	github.com/aws/aws-sdk-go v1.40.45 // indirect
+	github.com/aws/aws-sdk-go v1.44.122 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
@@ -29,7 +34,6 @@ require (
 	github.com/celestiaorg/celestia-app v0.12.0 // indirect
 	github.com/celestiaorg/go-libp2p-messenger v0.1.0 // indirect
 	github.com/celestiaorg/merkletree v0.0.0-20210714075610-a84dc3ddbbe4 // indirect
-	github.com/celestiaorg/nmt v0.14.0 // indirect
 	github.com/celestiaorg/quantum-gravity-bridge v1.3.0 // indirect
 	github.com/celestiaorg/rsmt2d v0.8.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
@@ -111,7 +115,7 @@ require (
 	github.com/gtank/ristretto255 v0.1.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-getter v1.6.1 // indirect
+	github.com/hashicorp/go-getter v1.7.4 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
@@ -157,7 +161,6 @@ require (
 	github.com/jbenet/goprocess v0.1.4 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/jmhodges/levigo v1.0.0 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.15.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.3 // indirect
 	github.com/klauspost/reedsolomon v1.11.1 // indirect
@@ -191,7 +194,7 @@ require (
 	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
-	github.com/mitchellh/go-testing-interface v1.0.0 // indirect
+	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
@@ -234,7 +237,6 @@ require (
 	github.com/rs/cors v1.8.2 // indirect
 	github.com/rs/zerolog v1.27.0 // indirect
 	github.com/sasha-s/go-deadlock v0.3.1 // indirect
-	github.com/sashabaranov/go-openai v1.5.7 // indirect
 	github.com/shirou/gopsutil v3.21.6+incompatible // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.9.2 // indirect
@@ -253,7 +255,7 @@ require (
 	github.com/tendermint/tm-db v0.6.7 // indirect
 	github.com/tklauser/go-sysconf v0.3.10 // indirect
 	github.com/tklauser/numcpus v0.4.0 // indirect
-	github.com/ulikunitz/xz v0.5.8 // indirect
+	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/vivint/infectious v0.0.0-20200605153912-25a574ae18a3 // indirect
 	github.com/whyrusleeping/cbor v0.0.0-20171005072247-63513f603b11 // indirect
 	github.com/whyrusleeping/cbor-gen v0.0.0-20230126041949-52956bd4c9aa // indirect
@@ -274,7 +276,7 @@ require (
 	golang.org/x/exp v0.0.0-20230129154200-a960b3787bd2 // indirect
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/net v0.6.0 // indirect
-	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783 // indirect
+	golang.org/x/oauth2 v0.1.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/term v0.5.0 // indirect
